@@ -10,13 +10,14 @@ let Todo = require('./todo.model');
 
 app.use(cors());
 app.use(bodyParser.json());
-
-mongoose.connect('mongodb://127.0.0.1:27017/todos', { useNewUrlParser: true });
+const uri = "mongodb+srv://dbadmin:dbadmin@cluster0-fupyl.mongodb.net/test?retryWrites=true&w=majority"
+mongoose.connect(uri+"/todos", { useNewUrlParser: true });
 const connection = mongoose.connection;
 
 connection.once('open', function() {
     console.log("MongoDB database connection established successfully");
 })
+
 todoRoutes.route('/').get(function(req, res) {
     Todo.find(function(err, todos) {
         if (err) {
@@ -52,7 +53,6 @@ todoRoutes.route('/update/:id').put(function(req, res) {
             });
     });
 });
-
 todoRoutes.route('/add').post(function(req, res) {
     let todo = new Todo(req.body);
     todo.save()
