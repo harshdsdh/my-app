@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+const PORT =process.env.PORT || 5000;
 export default class CreateTodo extends Component {
 
     constructor(props) {
@@ -49,7 +50,7 @@ export default class CreateTodo extends Component {
             todo_priority: this.state.todo_priority,
             todo_completed: this.state.todo_completed
         };
-        axios.post('http://localhost:4000/todos/add', newTodo)
+        axios.post('http://localhost:'+PORT+'/todos/add', newTodo)
             .then(res => console.log(res.data));
         
         this.setState({
